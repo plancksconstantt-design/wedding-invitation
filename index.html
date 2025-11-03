@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Приглашение на свадьбу</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Мы женимся!</h1>
+            <div class="names">
+                <span class="bride">Елена</span>
+                <span class="and">&</span>
+                <span class="groom">Евгений</span>
+            </div>
+            <p class="date">8 августа 2026</p>
+        </header>
+
+        <main class="main-content">
+            <div class="invitation-text">
+                <p>Дорогие друзья и родные!</p>
+                <p>Мы будем очень рады разделить с вами самый важный день в нашей жизни.</p>
+            </div>
+
+            <form id="weddingForm" class="wedding-form">
+                <div class="form-group">
+                    <label for="fullName">Ваше ФИО *</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Вы придете на нашу свадьбу? *</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="attendance" value="yes" required>
+                            <span>Да, с радостью!</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="attendance" value="no">
+                            <span>К сожалению, не смогу</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group" id="guestsCountGroup">
+                    <label for="guestsCount">Сколько человек будет (включая вас)?</label>
+                    <select id="guestsCount" name="guestsCount">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Нужен ли вам транспорт? *</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="transport" value="yes" required>
+                            <span>Да</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="transport" value="no">
+                            <span>Нет</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group" id="transportDetails">
+                    <label for="transportAddress">Откуда вас забрать? (адрес)</label>
+                    <input type="text" id="transportAddress" name="transportAddress">
+                </div>
+
+                <div class="form-group">
+                    <label for="allergies">Особенности питания/аллергии</label>
+                    <textarea id="allergies" name="allergies" placeholder="Например: вегетарианец, аллергия на орехи..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="wishes">Ваши пожелания нам</label>
+                    <textarea id="wishes" name="wishes" placeholder="Мы будем рады любым warm словам..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Отправить ответ</button>
+            </form>
+
+            <div id="successMessage" class="success-message hidden">
+                <h2>Спасибо за ваш ответ!</h2>
+                <p>Мы очень ждем встречи с вами!</p>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
