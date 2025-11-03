@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Пытаемся отправить на Google Apps Script (в фоне) - НОВЫЙ URL
         try {
-            // Простой POST без ожидания ответа
+            // ПРАВИЛЬНЫЙ URL
             fetch('https://script.google.com/macros/s/AKfycbxxM3jSm-eRBF2KKhhUWO-OiSC34ilXQt-n7sBmYMa3Qk8qfsf_cmrSQNLyvqDGYw5U/exec', {
                 method: 'POST',
                 mode: 'no-cors',
@@ -91,7 +91,6 @@ document.addEventListener('DOMContentLoaded', function() {
         successText.innerHTML = 'Спасибо за ваш ответ!<br><small>Данные сохранены локально</small>';
     }
 
-    // Функция для экспорта данных из localStorage
     function exportLocalStorageData() {
         const responses = JSON.parse(localStorage.getItem('weddingResponses') || '[]');
         if (responses.length === 0) {
@@ -100,14 +99,12 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        // Создаем CSV для скачивания
         let csv = 'Дата,ФИО,Присутствие,Гости,Транспорт,Адрес,Аллергии,Пожелания\n';
         
         responses.forEach(response => {
             csv += `"${response.timestamp}","${response.fullName}","${response.attendance}","${response.guestsCount}","${response.transport}","${response.transportAddress}","${response.allergies}","${response.wishes}"\n`;
         });
         
-        // Создаем ссылку для скачивания
         const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -122,14 +119,9 @@ document.addEventListener('DOMContentLoaded', function() {
         alert(`Экспортировано ${responses.length} ответов`);
     }
 
-    // Делаем функцию экспорта доступной глобально
     window.exportLocalStorageData = exportLocalStorageData;
     
-    // Добавляем кнопку экспорта для администратора (опционально)
-    addExportButton();
-    
     function addExportButton() {
-        // Проверяем если это администратор (по URL параметру)
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.has('admin')) {
             const exportBtn = document.createElement('button');
@@ -150,4 +142,5 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.appendChild(exportBtn);
         }
     }
+    addExportButton();
 });
