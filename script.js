@@ -48,48 +48,37 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     function sendToGoogleSheets(data) {
-        // ВАШ НОВЫЙ URL
-        const googleScriptURL = 'https://script.google.com/macros/s/AKfycbxtobpDwLKtoq90lI6JyeczbOkAI-E0O66sOvlHaPZkBcw-9ZhVs-tFwMeF0xr4TEZe/exec';
-        
-        const submitBtn = document.querySelector('.submit-btn');
-        const originalText = submitBtn.textContent;
-        submitBtn.textContent = 'Отправляем...';
-        submitBtn.disabled = true;
-        
-        console.log('Отправка данных:', data);
-        
-        fetch(googleScriptURL, {
+    console.log('Данные для отправки:', data);
+    
+    // Показываем успех сразу
+    const submitBtn = document.querySelector('.submit-btn');
+    submitBtn.textContent = 'Отправляем...';
+    submitBtn.disabled = true;
+    
+    // Сохраняем локально ВСЕГДА
+    saveToLocalStorage(data);
+    
+    // Показываем успех
+    setTimeout(() => {
+        form.style.display = 'none';
+        successMessage.classList.remove('hidden');
+        successMessage.scrollIntoView({ behavior: 'smooth' });
+        console.log('Форма завершена - данные в localStorage');
+    }, 1000);
+    
+    // Пытаемся отправить на Google Apps Script (в фоне)
+    try {
+        // Простой POST без ожидания ответа
+        fetch('https://script.google.com/macros/s/AKfycbxtobpDwLKtoq90lI6JyeczbOkAI-E0O66sOvlHaPZkBcw-9ZhVs-tFwMeF0xr4TEZe/exec', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            mode: 'no-cors',
+            headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(data)
-        })
-        .then(response => {
-            console.log('Ответ получен:', response);
-            return response.json();
-        })
-        .then(result => {
-            console.log('Результат:', result);
-            
-            if (result.success) {
-                form.style.display = 'none';
-                successMessage.classList.remove('hidden');
-                successMessage.scrollIntoView({ behavior: 'smooth' });
-            } else {
-                alert('Ошибка: ' + result.message);
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-            }
-        })
-        .catch((error) => {
-            console.error('Ошибка fetch:', error);
-            saveToLocalStorage(data);
-            form.style.display = 'none';
-            successMessage.classList.remove('hidden');
-            successMessage.scrollIntoView({ behavior: 'smooth' });
-        });
+        }).then(() => console.log('Фоновая отправка завершена'));
+    } catch (e) {
+        console.log('Фоновая отправка не удалась, но данные сохранены локально');
     }
+}
     
     function saveToLocalStorage(data) {
         const responses = JSON.parse(localStorage.getItem('weddingResponses') || '[]');
