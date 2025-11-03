@@ -66,10 +66,10 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Форма завершена - данные в localStorage');
         }, 1000);
         
-        // Пытаемся отправить на Google Apps Script (в фоне)
+        // Пытаемся отправить на Google Apps Script (в фоне) - НОВЫЙ URL
         try {
             // Простой POST без ожидания ответа
-            fetch('https://script.google.com/macros/s/AKfycbxtobpDwLKtoq90lI6JyeczbOkAI-E0O66sOvlHaPZkBcw-9ZhVs-tFwMeF0xr4TEZe/exec', {
+            fetch('https://script.google.com/macros/s/AKfycbxxM3jSm-eRBF2KKhhUWO-OiSC34ilXQt-n7sBmYMa3Qk8qfsf_cmrSQNLyvqDGYw5U/exec', {
                 method: 'POST',
                 mode: 'no-cors',
                 headers: {'Content-Type': 'application/json'},
